@@ -8,7 +8,7 @@
     registerBlockType('giant-header/header', {
         edit: function(props) {
             const { attributes, setAttributes } = props;
-            const { logo, backgroundColor, contactText, contactUrl, contactDisplayMode, contactIcon, contactIconWidth, containerWidth } = attributes;
+            const { logo, backgroundColor, contactText, contactUrl, contactDisplayMode, contactIcon, contactIconWidth, contactIconLabel, containerWidth } = attributes;
             
             const inlineStyle = {};
             if (backgroundColor) {
@@ -141,6 +141,13 @@
                                                         value: contactIconWidth,
                                                         type: 'number',
                                                         onChange: function(value) { setAttributes({ contactIconWidth: value }); }
+                                                    }),
+                                                    el(TextControl, {
+                                                        label: __('Label (optional)'),
+                                                        value: contactIconLabel,
+                                                        onChange: function(value) { setAttributes({ contactIconLabel: value }); },
+                                                        placeholder: __('e.g. Contact us'),
+                                                        help: __('Displayed to the right of the icon.')
                                                     })
                                                 ) :
                                                 el(Button, { onClick: obj.open, variant: 'secondary', isSmall: true }, __('Upload Icon'))
@@ -160,7 +167,10 @@
                             // Contact link - LEFT
                             el('a', { href: contactUrl || '#contact', className: 'contact-link' },
                                 contactDisplayMode === 'icon' && contactIcon.url ?
-                                    el('img', { src: contactIcon.url, alt: contactIcon.alt || contactText, style: { maxWidth: (contactIconWidth || '32') + 'px', width: '100%', display: 'block' } }) :
+                                    el(Fragment, null,
+                                        el('img', { src: contactIcon.url, alt: contactIcon.alt || contactText, style: { maxWidth: (contactIconWidth || '32') + 'px', width: '100%', display: 'block' } }),
+                                        contactIconLabel && el('span', { className: 'contact-icon-label' }, contactIconLabel)
+                                    ) :
                                     (contactText || 'Contact us')
                             ),
                             

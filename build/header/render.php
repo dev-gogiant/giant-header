@@ -10,6 +10,7 @@ $contact_icon = isset($attributes['contactIcon']) ? $attributes['contactIcon'] :
 $contact_icon_url = isset($contact_icon['url']) ? $contact_icon['url'] : '';
 $contact_icon_alt = isset($contact_icon['alt']) ? $contact_icon['alt'] : $contact_text;
 $contact_icon_width = isset($attributes['contactIconWidth']) ? $attributes['contactIconWidth'] : '32';
+$contact_icon_label = isset($attributes['contactIconLabel']) ? $attributes['contactIconLabel'] : '';
 $container_width = isset($attributes['containerWidth']) ? $attributes['containerWidth'] : '1200';
 
 // Read parentColor from the inner navigation block so the header can expose it as a CSS var
@@ -44,7 +45,7 @@ $container_style = $container_width ? ' style="max-width: ' . esc_attr($containe
             <!-- Contact link - LEFT -->
             <a href="<?php echo esc_url($contact_url); ?>" class="contact-link">
                 <?php if ($contact_display_mode === 'icon' && $contact_icon_url): ?>
-                    <img src="<?php echo esc_url($contact_icon_url); ?>" alt="<?php echo esc_attr($contact_icon_alt); ?>" class="contact-icon" style="max-width: <?php echo esc_attr($contact_icon_width); ?>px; width: 100%;">
+                    <img src="<?php echo esc_url($contact_icon_url); ?>" alt="<?php echo esc_attr($contact_icon_alt); ?>" class="contact-icon" style="max-width: <?php echo esc_attr($contact_icon_width); ?>px; width: 100%;"><?php if ($contact_icon_label): ?><span class="contact-icon-label"><?php echo esc_html($contact_icon_label); ?></span><?php endif; ?>
                 <?php else: ?>
                     <?php echo esc_html($contact_text); ?>
                 <?php endif; ?>
